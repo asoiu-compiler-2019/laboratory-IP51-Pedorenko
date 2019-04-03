@@ -1,0 +1,15 @@
+Object {
+	places
+	    P1(1),
+P2
+	transitions
+	    T1(delay(0.5) distribution(exp))
+	arcs
+	    P1 -> T1,
+	    T1 -> P1,
+	    T1 -> P2
+}
+
+simulate 100
+P2 value
+P1 mean
