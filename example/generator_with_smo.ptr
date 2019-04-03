@@ -1,0 +1,21 @@
+Generator_with_smo {
+    places
+	P1(1), Queue, Channel(1), Result
+    transitions
+	generator(delay(5) distribution(exp)),
+	smo(delay(8) distribution(exp))
+    arcs
+	P1 -> generator,
+	generator -> P1,
+	generator -> Queue,
+	Queue -> smo,
+	Channel -> smo,
+	smo -> Channel,
+	smo -> Result
+}
+
+simulate 1000
+
+Queue mean
+Result value
+smo mean
