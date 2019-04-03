@@ -1,0 +1,45 @@
+conveyor {
+    places
+        part_type_1_place(1), queue1,
+        part_type_2_place(1), queue2,
+        part_type_3_place(1), queue3,
+
+        filled_sections, empty_sections
+
+    transitions
+        part_type_1_generator(delay(10) distribution(exp)),
+        part_type_2_generator(delay(40) distribution(exp)),
+        part_type_3_generator(delay(20)),
+        filling(delay(20) priority(3)),
+        go_empty(delay(0) priority(0))
+
+    arcs
+        part_type_1_place         -> part_type_1_generator,
+        part_type_1_generator     -> part_type_1_place,
+        part_type_2_place         -> part_type_2_generator,
+        part_type_2_generator     -> part_type_2_place,
+        part_type_3_place         -> part_type_3_generator,
+        part_type_3_generator     -> part_type_3_place,
+
+        part_type_1_generator (10)-> queue1,
+        part_type_2_generator (40)-> queue2,
+        part_type_3_generator     -> queue3,
+
+        queue1                (20)->filling,
+        queue2                (20)->filling,
+        queue3                    ->filling,
+
+        filling                   ->filled_sections,
+
+        queue3                    ->go_empty,
+        go_empty                  ->empty_sections
+}
+
+simulate 3000
+
+queue1 mean
+queue2 mean
+queue3 mean
+
+filled_sections value
+empty_sections value
